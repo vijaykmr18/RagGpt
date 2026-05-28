@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>RAG GPT</title>
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
     <script src="https://unpkg.com/lucide@latest" defer></script>
     <script src="{{ url_for('static', filename='app.js') }}" defer></script>
@@ -47,10 +48,20 @@
                     <h2>Chat</h2>
                     <p id="modelStatus">PDF search first</p>
                 </div>
-                <button id="logoutButton" class="secondary-action" type="button">
-                    <i data-lucide="log-out"></i>
-                    <span>Sign out</span>
-                </button>
+                <div class="header-actions">
+                    <button id="exportChatButton" class="secondary-action compact-action" type="button">
+                        <i data-lucide="download"></i>
+                        <span>Export</span>
+                    </button>
+                    <button id="clearChatButton" class="secondary-action compact-action danger-action" type="button">
+                        <i data-lucide="trash-2"></i>
+                        <span>Clear chat</span>
+                    </button>
+                    <button id="logoutButton" class="secondary-action compact-action" type="button">
+                        <i data-lucide="log-out"></i>
+                        <span>Sign out</span>
+                    </button>
+                </div>
             </header>
 
             <section id="chatBox" class="chat-box" aria-live="polite">
