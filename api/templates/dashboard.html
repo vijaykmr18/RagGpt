@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RAG GPT</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+    <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+</head>
+<body data-user-email="{{ user_email }}">
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div class="brand-row">
+                <div class="brand-mark">R</div>
+                <div>
+                    <h1>RAG GPT</h1>
+                    <p>{{ user_email }}</p>
+                </div>
+            </div>
+
+            <form id="uploadForm" class="upload-form">
+                <input id="pdfFile" name="file" type="file" accept="application/pdf" hidden>
+                <label for="pdfFile" class="file-drop" title="Choose PDF">
+                    <i data-lucide="file-up"></i>
+                    <span id="fileName">Choose PDF</span>
+                </label>
+                <button class="primary-action" type="submit">
+                    <i data-lucide="upload"></i>
+                    <span>Upload</span>
+                </button>
+                <p id="uploadStatus" class="status-line" role="status"></p>
+            </form>
+
+            <div class="section-title">
+                <span>Files</span>
+                <button id="refreshDocs" class="icon-button" type="button" title="Refresh files">
+                    <i data-lucide="refresh-cw"></i>
+                </button>
+            </div>
+            <div id="documentList" class="document-list"></div>
+        </aside>
+
+        <main class="chat-shell">
+            <header class="chat-header">
+                <div>
+                    <h2>Chat</h2>
+                    <p id="modelStatus">PDF search first</p>
+                </div>
+                <button id="logoutButton" class="secondary-action" type="button">
+                    <i data-lucide="log-out"></i>
+                    <span>Sign out</span>
+                </button>
+            </header>
+
+            <section id="chatBox" class="chat-box" aria-live="polite">
+                <div class="empty-state">
+                    <i data-lucide="messages-square"></i>
+                    <h3>Start a conversation</h3>
+                </div>
+            </section>
+
+            <form id="chatForm" class="composer">
+                <textarea
+                    id="message"
+                    name="message"
+                    rows="1"
+                    placeholder="Message RAG GPT"
+                    autocomplete="off"
+                ></textarea>
+                <button id="sendButton" class="send-button" type="submit" title="Send message">
+                    <i data-lucide="send-horizontal"></i>
+                </button>
+            </form>
+        </main>
+    </div>
+</body>
+</html>

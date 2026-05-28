@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ "Create account" if mode == "signup" else "Sign in" }} - RAG GPT</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+    <script src="{{ url_for('static', filename='auth.js') }}" defer></script>
+</head>
+<body class="auth-body">
+    <main class="auth-panel">
+        <div class="brand-row auth-brand">
+            <div class="brand-mark">R</div>
+            <div>
+                <h1>RAG GPT</h1>
+                <p>{{ "Create your workspace" if mode == "signup" else "Welcome back" }}</p>
+            </div>
+        </div>
+
+        <form id="authForm" data-mode="{{ mode }}" class="auth-form">
+            {% if mode == "signup" %}
+            <label>
+                <span>Name</span>
+                <input id="name" name="name" type="text" autocomplete="name">
+            </label>
+            {% endif %}
+            <label>
+                <span>Email</span>
+                <input id="email" name="email" type="email" autocomplete="email" required>
+            </label>
+            <label>
+                <span>Password</span>
+                <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    autocomplete="{{ 'new-password' if mode == 'signup' else 'current-password' }}"
+                    required
+                    minlength="8"
+                >
+            </label>
+
+            <button id="authButton" class="primary-action wide-action" type="submit">
+                <i data-lucide="{{ 'user-plus' if mode == 'signup' else 'log-in' }}"></i>
+                <span>{{ "Create account" if mode == "signup" else "Sign in" }}</span>
+            </button>
+            <p id="authStatus" class="status-line" role="status"></p>
+        </form>
+
+        <p class="auth-switch">
+            {% if mode == "signup" %}
+            Already have an account? <a href="/signin">Sign in</a>
+            {% else %}
+            New here? <a href="/signup">Create account</a>
+            {% endif %}
+        </p>
+    </main>
+</body>
+</html>

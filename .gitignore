@@ -1,0 +1,11 @@
+__pycache__/
+.env
+venv/
+.venv/
+uploads/
+chroma_db/
+*.zip
+*.log
+.vercel/
+
+.vercel
