@@ -24,7 +24,7 @@ function clearEmptyState() {
 }
 
 function scrollChat() {
-    chatBox.scrollTop = chatBox.scrollHeight;
+    chatBox.scrollTo({ top: chatBox.scrollHeight, behavior: "smooth" });
 }
 
 function setStatus(element, message, isError = false) {
@@ -248,6 +248,27 @@ uploadForm.addEventListener("submit", async (event) => {
 
 refreshDocs.addEventListener("click", loadDocuments);
 
+document.getElementById("clearChatButton").addEventListener("click", () => {
+    if (!confirm("Clear the conversation? This cannot be undone.")) return;
+    chatBox.innerHTML = '<div class="empty-state"><i data-lucide="messages-square"></i><h3>Start a conversation</h3></div>';
+    refreshIcons();
+});
+
+document.getElementById("exportChatButton").addEventListener("click", () => {
+    const messages = chatBox.querySelectorAll(".message");
+    if (!messages.length) return;
+    const lines = Array.from(messages).map((m) => {
+        const role = m.classList.contains("user") ? "[User]" : "[AI]";
+        return `${role}: ${m.querySelector(".message-body").textContent.trim()}`;
+    });
+    const blob = new Blob([lines.join("\n\n")], { type: "text/plain" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `chat_export_${new Date().toISOString().slice(0, 10)}.txt`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+});
+
 logoutButton.addEventListener("click", async () => {
     await fetch("/api/auth/logout", {method: "POST"});
     window.location.href = "/signin";
@@ -258,25 +279,3 @@ window.addEventListener("DOMContentLoaded", () => {
     loadDocuments();
 });
 
-// In api/static/app.js
-
-function clearChat() {
-    // 1. Clear the messages from the UI state
-    // Replace 'messages' with the actual variable name you use 
-    // to store the chat bubbles in your JavaScript
-    messages = []; 
-    
-    // 2. Select the chat container element and empty it
-    const chatContainer = document.getElementById('chat-container'); // Adjust ID as needed
-    if (chatContainer) {
-        chatContainer.innerHTML = ''; 
-    }
-    
-    console.log("Chat cleared");
-}
-
-// Ensure your button is linked to this function
-const clearButton = document.getElementById('clear-chat-btn'); // Adjust ID as needed
-if (clearButton) {
-    clearButton.addEventListener('click', clearChat);
-}
