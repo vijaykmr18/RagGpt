@@ -257,3 +257,26 @@ window.addEventListener("DOMContentLoaded", () => {
     refreshIcons();
     loadDocuments();
 });
+
+// In api/static/app.js
+
+function clearChat() {
+    // 1. Clear the messages from the UI state
+    // Replace 'messages' with the actual variable name you use 
+    // to store the chat bubbles in your JavaScript
+    messages = []; 
+    
+    // 2. Select the chat container element and empty it
+    const chatContainer = document.getElementById('chat-container'); // Adjust ID as needed
+    if (chatContainer) {
+        chatContainer.innerHTML = ''; 
+    }
+    
+    console.log("Chat cleared");
+}
+
+// Ensure your button is linked to this function
+const clearButton = document.getElementById('clear-chat-btn'); // Adjust ID as needed
+if (clearButton) {
+    clearButton.addEventListener('click', clearChat);
+}
