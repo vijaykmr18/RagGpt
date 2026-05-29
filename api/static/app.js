@@ -1,4 +1,5 @@
 const chatBox = document.getElementById("chatBox");
+let chatAnchor = document.getElementById("chatAnchor");
 const chatForm = document.getElementById("chatForm");
 const messageInput = document.getElementById("message");
 const sendButton = document.getElementById("sendButton");
@@ -24,7 +25,7 @@ function clearEmptyState() {
 }
 
 function scrollChat() {
-    chatBox.scrollTo({ top: chatBox.scrollHeight, behavior: "smooth" });
+    chatAnchor.scrollIntoView({ behavior: "smooth" });
 }
 
 function setStatus(element, message, isError = false) {
@@ -250,7 +251,8 @@ refreshDocs.addEventListener("click", loadDocuments);
 
 document.getElementById("clearChatButton").addEventListener("click", () => {
     if (!confirm("Clear the conversation? This cannot be undone.")) return;
-    chatBox.innerHTML = '<div class="empty-state"><i data-lucide="messages-square"></i><h3>Start a conversation</h3></div>';
+    chatBox.innerHTML = '<div class="empty-state"><i data-lucide="messages-square"></i><h3>Start a conversation</h3></div><div id="chatAnchor"></div>';
+    chatAnchor = document.getElementById("chatAnchor");
     refreshIcons();
 });
 
